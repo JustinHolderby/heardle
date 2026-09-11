@@ -1,291 +1,304 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>✦ my little corner ✦</title>
+  <title>🎵 Heardle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cream: #f5f0e8;
-      --pink: #e8a0b4;
-      --lavender: #b8a4d4;
-      --mint: #9fcfb8;
-      --yellow: #f5d87a;
-      --sky: #a0c8e8;
-      --dark: #2a2030;
-      --mid: #4a3858;
-      --border: #8878a8;
+      /* Browns / Skin tones */
+      --color-brown:       #be4a2f;
+      --color-brown-light: #d77643;
+      --color-skin-pale:   #ead4aa;
+      --color-skin:        #e4a672;
+      --color-skin-dark:   #b86f50;
+
+      /* Reds */
+      --color-red-dark:    #733e39;
+      --color-maroon-dark: #3e2731;
+      --color-red:         #a22633;
+      --color-red-bright:  #e43b44;
+      --color-red-vivid:   #ff0044;
+
+      /* Oranges / Yellows */
+      --color-orange:      #f77622;
+      --color-amber:       #feae34;
+      --color-yellow:      #fee761;
+
+      /* Greens */
+      --color-green:       #63c74d;
+      --color-green-mid:   #3e8948;
+      --color-green-mid:   #3e8948;
+      --color-green-dark:  #265c42;
+      --color-teal-dark:   #193c3e;
+
+      /* Blues / Cyans */
+      --color-blue-dark:   #124e89;
+      --color-blue:        #0099db;
+      --color-cyan:        #2ce8f5;
+
+      /* Grays / Darks */
+      --color-white:       #ffffff;
+      --color-gray-light:  #c0cbdc;
+      --color-gray:        #8b9bb4;
+      --color-gray-mid:    #5a6988;
+      --color-gray-dark:   #3a4466;
+      --color-navy:        #262b44;
+      --color-void:        #181425;
+      --color-black:       #000000;
+
+      /* Pinks / Purples */
+      --color-purple-dark: #68386c;
+      --color-magenta:     #b55088;
+      --color-pink:        #f6757a;
+      --color-peach:       #e8b796;
+      --color-peach-dark:  #c28569;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background-color: var(--dark);
-      background-image:
-        radial-gradient(circle at 20% 20%, rgba(184,164,212,0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(232,160,180,0.10) 0%, transparent 50%);
       font-family: 'VT323', monospace;
-      color: var(--cream);
       min-height: 100vh;
-      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: var(--color-navy);
     }
 
-    /* Pixel star field */
-    .stars {
+    /* ━━━ MAIN PAGE ━━━ */
+    #main-page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s;
+      width: 960px;
+      margin: auto
+    }
+    #main-page.visible {
+      padding-top: 30px;
+      display: block;
+      opacity: 1;
+      min-height: 150vh;
+    }
+
+    /* Mossy cobblestone texture overlay */
+    #main-page::before {
+      content: '';
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-    }
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      animation: twinkle var(--d) ease-in-out infinite;
-    }
-    @keyframes twinkle {
-      0%,100% { opacity: 0.2; }
-      50% { opacity: 1; }
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 31px,
+          rgba(94,233,233,0.04) 31px,
+          rgba(94,233,233,0.04) 32px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 47px,
+          rgba(139,151,182,0.03) 47px,
+          rgba(139,151,182,0.03) 48px
+        );
     }
 
-    .container {
+    .page-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 5rem;
       position: relative;
       z-index: 1;
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
     }
 
-    /* Header */
-    .site-header {
+    /* ── Hero ── */
+    .hero {
       text-align: center;
-      padding: 3rem 0 2rem;
+      padding: 1rem 1rem 1rem;
+      position: relative;
     }
-    .site-title {
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1rem, 4vw, 1.6rem);
-      color: var(--pink);
-      text-shadow: 3px 3px 0 var(--mid);
-      letter-spacing: 0.05em;
-      line-height: 1.6;
+    .hero-title {
+      font-family: 'Jersey 10', sans-serif;
+      font-size: 4rem;
+      letter-spacing: 0.5rem;
+      color: var(--color-white);
+      text-shadow: 3px 3px 0 var(--color-gray);
+      line-height: 1.8;
     }
-    .site-subtitle {
-      font-size: 1.5rem;
-      color: var(--lavender);
-      margin-top: 0.8rem;
-      letter-spacing: 0.1em;
+    .hero-msg {
+      font-size: 1.3rem;
+      color: var(--color-white);
+      max-width: 520px;
+      margin: 1.2rem auto;
+      line-height: 1.7;
+      opacity: 0.9;
     }
 
-    /* Pixel divider */
-    .divider {
+    /* ── Section wrapper ── */
+    .section {
+      background: var(--color-gray);
+      border: 4px solid var(--color-gray-dark);
+      border-radius: 5px;
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+    .section-title {
+      font-family: 'Jersey 10', sans-serif;
+      font-size: 0.6rem;
+      color: var(--color-gray-dark);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin: 2rem 0;
-      color: var(--border);
-      font-size: 1.2rem;
-      letter-spacing: 4px;
-    }
-    .divider::before, .divider::after {
+      gap: 10px;
       content: '';
       flex: 1;
       height: 2px;
-      background: repeating-linear-gradient(90deg, var(--border) 0, var(--border) 4px, transparent 4px, transparent 8px);
+      background: repeating-linear-gradient(90deg, var(--color-gray-dark) 0, var(--color-gray-dark) 4px, transparent 8px, transparent 10px);
     }
 
-    /* Friend grid */
-    .friends-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.25rem;
-      margin: 1.5rem 0;
+    /* ── Message section ── */
+    .message-box {
+      background: var(--color-gray-light);
+      border-left: 4px solid var(--color-gray-dark);
+      padding: 1rem 1.25rem;
+      line-height: 1.8;
+      height: 100%;
+      color: var(--color-gray-dark);
+      font-size: 3rem;
     }
 
-    .friend-card {
-      background: var(--mid);
-      border: 2px solid var(--border);
-      border-radius: 0;
-      padding: 1.25rem 1rem;
+    .choose-genre {
+      font-family: 'Jersey 10', sans-serif;
+      display: flex;
+      justify-content: center;
+      color: var(--color-gray-dark);
+    }
+
+    .genre-container {
+      justify-content: center;
+      gap: 5px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .genre-selector {
+      font-family: 'Jersey 10', sans-serif;
+      line-height: 2.2rem;
+      font-size: 2rem;
+      width: 130px;
+      margin: 20px;
+      border: 3px solid var(--color-gray-dark);
+      border-radius: 5px;
       text-align: center;
+      background-color: var(--color-gray-light);
+      color: var(--color-gray-dark);
       text-decoration: none;
-      color: inherit;
-      display: block;
-      position: relative;
-      transition: transform 0.1s, box-shadow 0.1s;
-      image-rendering: pixelated;
-    }
-    .friend-card::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border: 2px solid transparent;
-      transition: border-color 0.1s;
-    }
-    .friend-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 4px 4px 0 var(--border);
-    }
-    .friend-card:hover::before {
-      border-color: var(--pink);
+      transition: all 0.2s ease;
     }
 
-    .friend-avatar {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 0.75rem;
-      image-rendering: pixelated;
-      display: block;
+    .genre-selector:hover {
+      background-color: var(--color-gray);
+      color: var(--color-gray-white);
+      transform: scale(1.05);
     }
-    .friend-name {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.55rem;
-      color: var(--yellow);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
-    }
-    .friend-blurb {
-      font-size: 1rem;
-      color: var(--cream);
-      opacity: 0.8;
-    }
-    .friend-tag {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--mint);
-      background: rgba(159,207,184,0.15);
-      padding: 0 6px;
-      border: 1px solid var(--mint);
+    
+    .disabled {
+      opacity: 50%;
+      pointer-events: none;
     }
 
-    .card-pink  { border-color: var(--pink);     }
-    .card-pink:hover { box-shadow: 4px 4px 0 var(--pink); }
-    .card-lav   { border-color: var(--lavender);  }
-    .card-lav:hover { box-shadow: 4px 4px 0 var(--lavender); }
-    .card-mint  { border-color: var(--mint);      }
-    .card-mint:hover { box-shadow: 4px 4px 0 var(--mint); }
-    .card-sky   { border-color: var(--sky);       }
-    .card-sky:hover { box-shadow: 4px 4px 0 var(--sky); }
-    .card-yellow{ border-color: var(--yellow);    }
-    .card-yellow:hover { box-shadow: 4px 4px 0 var(--yellow); }
-
-    /* Footer */
-    .site-footer {
+    /* ── Footer ── */
+    .page-footer {
       text-align: center;
-      margin-top: 3rem;
+      margin-top: 2.5rem;
       font-size: 1rem;
-      color: var(--border);
+      color: var(--stone);
       letter-spacing: 0.1em;
     }
-    .site-footer a { color: var(--lavender); text-decoration: none; }
-    .site-footer a:hover { text-decoration: underline; }
+    .page-footer a { color: var(--slate); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
 
-    /* Bouncing cursor */
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    .cursor {
-      display: inline-block;
-      animation: blink 1s step-end infinite;
+    /* Floating pixel leaves / embers */
+    .floaters { position: fixed; inset: 0; pointer-events: none; z-index: 10; overflow: hidden; }
+    .floater {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0;
+      animation: float-up var(--fd) ease-in var(--delay) infinite;
     }
+    @keyframes float-up {
+      0%   { transform: translateY(0) rotate(0deg) scale(0.75); opacity: 0; }
+      10%  { opacity: 0.65; }
+      80%  { opacity: 0.35; }
+      100% { transform: translateY(-120px) rotate(25deg) scale(1.25); opacity: 0; }
+    }
+  
   </style>
 </head>
 <body>
 
-  <!-- Pixel stars generated by JS -->
-  <div class="stars" id="stars"></div>
+<!-- ══════════════════════════════
+     MAIN PAGE
+══════════════════════════════ -->
+<div id="main-page">
+  <div class="floaters" id="floaters"></div>
+    <div class="page-wrap">
+      <header class="hero">
+        <h1 class="hero-title">🎵 Heardle, but better! 🎵</h1>
+        <p class="hero-msg">
+          Justin Holderby<br>
+        </p>
+      </header>
 
-  <div class="container">
-    <header class="site-header">
-      <h1 class="site-title">✦ my little corner ✦</h1>
-      <p class="site-subtitle">a space just for you<span class="cursor">_</span></p>
-    </header>
-
-    <div class="divider">✦ ✦ ✦</div>
-
-    <p style="text-align:center; font-size:1.3rem; color:var(--lavender); margin-bottom:1.5rem; letter-spacing:0.05em;">
-      each page below is made just for one person.<br>
-      if you see your name — it's yours. ♡
-    </p>
-
-    <div class="friends-grid">
-
-      <!-- FRIEND 1 — example (replace with real names + link to their page) -->
-      <a href="friends/morgan.html" class="friend-card card-pink">
-        <img class="friend-avatar" src="sprites/maya.png" alt="pixel art avatar" onerror="this.style.display='none'">
-        <canvas class="friend-avatar" id="av-maya" width="64" height="64"></canvas>
-        <div class="friend-name">morgan</div>
-        <div class="friend-blurb">the one who always knows the right song</div>
-        <span class="friend-tag">♫ music</span>
-      </a>
-
-      <!-- FRIEND 2 — placeholder cards -->
-      <a href="heardle" class="friend-card card-lav">
-        <img width=128 height=128 src="sprites/musicIcon.png" alt="pixel art avatar" onerror="this.style.display='none'">
-        <div class="friend-name">Heardle, but better</div>
-        <div class="friend-blurb">coming soon...</div>
-      </a>
-
-      <a href="friends/friend3.html" class="friend-card card-mint">
-        <canvas class="friend-avatar" id="av-3" width="64" height="64"></canvas>
-        <div class="friend-name">???</div>
-        <div class="friend-blurb">coming soon...</div>
-        <span class="friend-tag">✦ mystery</span>
-      </a>
-
-      <a href="friends/friend4.html" class="friend-card card-sky">
-        <canvas class="friend-avatar" id="av-4" width="64" height="64"></canvas>
-        <div class="friend-name">???</div>
-        <div class="friend-blurb">coming soon...</div>
-        <span class="friend-tag">✦ mystery</span>
-      </a>
-
+      <!-- Personal message -->
+      <section class="section" aria-labelledby="msg-title">
+        <div class="section-title" id="msg-title"></div>
+        <div class="message-box">
+          <div class="choose-genre">Choose a genre:</div>
+          <div class="genre-container">
+            <a href="heardleGenre.html?genre=disney" class="genre-selector disabled">Disney</a>
+            <a href="heardleGenre.html?genre=movies" class="genre-selector">Movies</a>
+            <!-- <a href="heardleGenre.html?genre=2010s" class="genre-selector disabled">2010s</a>
+            <a href="heardleGenre.html?genre=2000s" class="genre-selector disabled">2000s</a>
+            <a href="heardleGenre.html?genre=1980s" class="genre-selector disabled">1980s</a>
+            <a href="heardleGenre.html?genre=television" class="genre-selector disabled">TV Themes</a>
+            <a href="heardleGenre.html?genre=glee" class="genre-selector disabled">Glee</a>
+            <a href="heardleGenre.html?genre=games" class="genre-selector disabled">Games</a>
+            <a href="heardleGenre.html?genre=kpop" class="genre-selector">K-Pop</a>
+            <a href="heardleGenre.html?genre=christmas" class="genre-selector">Christmas</a> -->
+          </div>
+        </div>
+      </section>
     </div>
-
-    <div class="divider">✦ ✦ ✦</div>
-
-    <footer class="site-footer">
-      made with ♡ · hosted on <a href="https://pages.github.com" target="_blank">github pages</a>
-    </footer>
   </div>
+</div>
 
-  <script>
-    /* ── Star field ── */
-    const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 120; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${1.5+Math.random()*3}s;animation-delay:${Math.random()*3}s;opacity:${0.2+Math.random()*0.6}`;
-      if (Math.random() > 0.85) { s.style.width = s.style.height = '3px'; }
-      starsEl.appendChild(s);
-    }
+<script>
 
-    /* ── Pixel avatar generator (fallback if no real image) ── */
-    function drawAvatar(id, palette) {
-      const c = document.getElementById(id);
-      if (!c) return;
-      const ctx = c.getContext('2d');
-      const size = 64, px = 8, cols = size/px;
-      // Mirror a random 4×8 grid for symmetry
-      const half = [];
-      for (let r = 0; r < cols; r++) {
-        half[r] = [];
-        for (let col = 0; col < cols/2; col++) half[r][col] = Math.random() > 0.45;
-      }
-      for (let r = 0; r < cols; r++) {
-        for (let col = 0; col < cols; col++) {
-          const on = col < cols/2 ? half[r][col] : half[r][cols-1-col];
-          ctx.fillStyle = on ? palette[Math.floor(Math.random()*palette.length)] : 'transparent';
-          if (on) ctx.fillRect(col*px, r*px, px, px);
-        }
-      }
-    }
+const mp = document.getElementById('main-page');
+mp.style.display = 'block';
+requestAnimationFrame(() => mp.classList.add('visible'));
+initFloaters();
 
-    drawAvatar('av-maya',   ['#e8a0b4','#f5d87a','#f5f0e8','#b8a4d4']);
-    drawAvatar('av-2',      ['#b8a4d4','#9fcfb8','#f5f0e8','#e8a0b4']);
-    drawAvatar('av-3',      ['#9fcfb8','#a0c8e8','#f5f0e8','#f5d87a']);
-    drawAvatar('av-4',      ['#a0c8e8','#e8a0b4','#f5f0e8','#9fcfb8']);
-  </script>
+/* ── FLOATING LEAVES / EMBERS ── */
+function initFloaters() {
+  const container = document.getElementById('floaters');
+  container.innerHTML = '';
+  /* autumn-toned symbols */
+  const symbols = ['♬','🎵','🎶','♩','♬'];
+  const colors  = ['#ff0044','#0099db','#68386c'];
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('div');
+    el.className = 'floater';
+    el.textContent = symbols[i % symbols.length];
+    el.style.cssText = `left:${Math.random()*100}%;bottom:${-20+Math.random()*30}px;color:${colors[i%colors.length]};--fd:${4+Math.random()*6}s;--delay:${Math.random()*8}s`;
+    container.appendChild(el);
+  }
+}
+
+</script>
 </body>
 </html>

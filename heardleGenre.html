@@ -1,0 +1,845 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Heardle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Browns / Skin tones */
+      --color-brown:       #be4a2f;
+      --color-brown-light: #d77643;
+      --color-skin-pale:   #ead4aa;
+      --color-skin:        #e4a672;
+      --color-skin-dark:   #b86f50;
+
+      /* Reds */
+      --color-red-dark:    #733e39;
+      --color-maroon-dark: #3e2731;
+      --color-red:         #a22633;
+      --color-red-bright:  #e43b44;
+      --color-red-vivid:   #ff0044;
+
+      /* Oranges / Yellows */
+      --color-orange:      #f77622;
+      --color-amber:       #feae34;
+      --color-yellow:      #fee761;
+
+      /* Greens */
+      --color-green:       #63c74d;
+      --color-green-mid:   #3e8948;
+      --color-green-mid:   #3e8948;
+      --color-green-dark:  #265c42;
+      --color-teal-dark:   #193c3e;
+
+      /* Blues / Cyans */
+      --color-blue-dark:   #124e89;
+      --color-blue:        #0099db;
+      --color-cyan:        #2ce8f5;
+
+      /* Grays / Darks */
+      --color-white:       #ffffff;
+      --color-gray-light:  #c0cbdc;
+      --color-gray:        #8b9bb4;
+      --color-gray-mid:    #5a6988;
+      --color-gray-dark:   #3a4466;
+      --color-navy:        #262b44;
+      --color-void:        #181425;
+      --color-black:       #000000;
+
+      /* Pinks / Purples */
+      --color-purple-dark: #68386c;
+      --color-magenta:     #b55088;
+      --color-pink:        #f6757a;
+      --color-peach:       #e8b796;
+      --color-peach-dark:  #c28569;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'VT323', monospace;
+      min-height: 100vh;
+      overflow-y: auto;
+      background-color: var(--color-navy);
+    }
+
+    /* ━━━ MAIN PAGE ━━━ */
+    #main-page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s;
+      max-width: 960px;
+      min-width: 940px;
+      margin: auto
+    }
+    #main-page.visible {
+      padding-top: 30px;
+      display: block;
+      opacity: 1;
+      min-height: 100vh;
+    }
+
+    /* Mossy cobblestone texture overlay */
+    #main-page::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 31px,
+          rgba(94,233,233,0.04) 31px,
+          rgba(94,233,233,0.04) 32px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 47px,
+          rgba(139,151,182,0.03) 47px,
+          rgba(139,151,182,0.03) 48px
+        );
+    }
+
+    .page-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 1rem 1rem 1.5rem;
+      position: relative;
+    }
+    .hero-title {
+      font-family: 'Jersey 10', sans-serif;
+      font-size: 4rem;
+      letter-spacing: 0.5rem;
+      color: var(--color-white);
+      text-shadow: 3px 3px 0 var(--color-gray);
+      line-height: 1.8;
+    }
+
+    /* ── Section wrapper ── */
+    .section {
+      background: var(--color-gray);
+      border: 4px solid var(--color-gray-dark);
+      border-radius: 5px;
+      height: 950px;
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+    .section-title {
+      font-family: 'Jersey 10', sans-serif;
+      font-size: 0.6rem;
+      color: var(--color-gray-dark);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--color-gray-dark) 0, var(--color-gray-dark) 4px, transparent 8px, transparent 10px);
+    }
+
+    /* ── Message section ── */
+    .message-box {
+      background: var(--color-gray-light);
+      padding: 1rem 1.25rem;
+      line-height: 1.8;
+      color: var(--color-gray-dark);
+      font-size: 2rem;
+      height: 97%;
+    }
+
+    .back-button {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .horiz-space-between {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .horiz-center {
+      display: flex;
+      justify-content: center;
+    }
+
+    .time-bar {
+      height: 20px;
+      margin: 50px 20px;
+      background-color: var(--color-gray);
+      border: 2px solid var(--color-gray-dark);
+      border-radius: 6px;
+    }
+
+    .time-bar-playing {
+      background-color: var(--color-blue);
+      border-radius: 3px;
+      width:0%;
+      height:100%;
+      margin-right: auto;
+    }
+
+    .time-bar-cutoff {
+      background-color: var(--color-gray-dark);
+      width:90%; 
+      height:100%; 
+      margin-left: auto;
+    }
+
+    .guess-bar {
+      align-items: center;
+      margin: 20px;
+      height: 60px;
+      border: 1px solid var(--color-gray-dark);
+      border-radius: 6px;
+      font-family: 'Jersey 10', sans-serif;
+    }
+
+    .guess-input {
+      margin: 40px 0px 0px;
+      padding: 10px;
+      width: 90%;
+      font-size: 2rem;
+      background-color: var(--color-gray);
+      font-family: 'Jersey 10', sans-serif;
+      border: 2px solid var(--color-gray-dark);
+      border-radius: 6px;
+      color: var(--color-gray-dark);
+    }
+
+    .guess-input::placeholder {
+      opacity: 0.5;
+      color: var(--color-gray-dark);
+      letter-spacing: 0.05rem;
+    }
+
+    .song-answer {
+      font-size: 3.5rem;
+      font-style: italic;
+      letter-spacing: 0.1rem;
+      padding: 10px;
+      text-shadow: 1px 2px 0 var(--color-gray-dark);
+      color: var(--color-gray-mid);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    img {
+      cursor: pointer;
+      image-rendering: pixelated;
+      transition: all 0.2s ease;
+    }
+
+    /* Example B: Zoom in slightly (requires overflow: hidden on the parent container) */
+    img:hover {
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .yt-container {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events:none;
+    }
+
+    .autocomplete-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .autocomplete-dropdown {
+      position: absolute;
+      bottom: 80%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-height: 240px;
+      overflow-y: auto;
+      background-color: var(--color-gray-light);
+      border: 2px solid var(--color-gray-dark);
+      border-radius: 6px;
+      z-index: 100;
+      display: none;
+      font-family: 'Jersey 10', sans-serif;
+      font-size: 1.6rem;
+    }
+
+    .autocomplete-dropdown.open {
+      display: block;
+    }
+
+    .autocomplete-item {
+      padding: 8px 14px;
+      cursor: pointer;
+      color: var(--color-gray-dark);
+      border-bottom: 1px solid var(--color-gray);
+    }
+
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+
+    .autocomplete-item:hover,
+    .autocomplete-item.active {
+      background-color: var(--color-gray);
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 1rem;
+      color: var(--stone);
+      letter-spacing: 0.1em;
+    }
+    .page-footer a { color: var(--slate); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    /* Floating pixel leaves / embers */
+    .floaters { position: fixed; inset: 0; pointer-events: none; z-index: 10; overflow: hidden; }
+    .floater {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0;
+      animation: float-up var(--fd) ease-in var(--delay) infinite;
+    }
+    @keyframes float-up {
+      0%   { transform: translateY(0) rotate(0deg) scale(0.75); opacity: 0; }
+      10%  { opacity: 0.65; }
+      80%  { opacity: 0.35; }
+      100% { transform: translateY(-120px) rotate(25deg) scale(1.25); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     MAIN PAGE
+══════════════════════════════ -->
+<div id="main-page">
+  <div class="floaters" id="floaters"></div>
+    <div class="page-wrap">
+      <header class="hero">
+        <h1 id="main-title" class="hero-title">🎵 Heardle, but better! 🎵</h1>
+      </header>
+
+      <div class="back-button">
+        <a href="heardle.html">
+          <img id="back" style="image-rendering: pixelated;" width=111 height=39 src="../sprites/BackButton.png" alt="Go back" onerror="this.style.display='none'">
+        </a>
+      </div>
+
+      <section id="game-box" class="section" aria-labelledby="msg-title">
+        <div class="section-title" id="msg-title"></div>
+        <div class="message-box">
+          <div id="guess1" class="horiz-space-between guess-bar"><div></div>???<div></div></div>
+          <div id="guess2" class="horiz-space-between guess-bar"><div></div>???<div></div></div>
+          <div id="guess3" class="horiz-space-between guess-bar"><div></div>???<div></div></div>
+          <div id="guess4" class="horiz-space-between guess-bar"><div></div>???<div></div></div>
+          <div id="guess5" class="horiz-space-between guess-bar"><div></div>???<div></div></div>
+          <div id="guess6" class="horiz-space-between guess-bar"><div></div>???<div></div></div>
+          <div class="horiz-space-between time-bar">
+            <div id="time-bar-playing" class="time-bar-playing"></div>
+            <div id="time-bar-cutoff" class="time-bar-cutoff"></div>
+          </div>
+          <div class="horiz-space-between">
+            <img id="skip" style="image-rendering: pixelated;" width=244 height=92 src="../sprites/SkipButton.png" alt="Add time" onerror="this.style.display='none'">
+            <img id="play" style="image-rendering: pixelated;" width=92 height=92 src="../sprites/playButton.png" alt="Play track" onerror="this.style.display='none'">
+            <img id="submit" style="image-rendering: pixelated;" width=244 height=92 src="../sprites/SubmitButton.png" alt="Submit guess" onerror="this.style.display='none'">
+          </div>
+          <div id="yt-container">
+            <div id="yt-player"></div>
+          </div>
+          <div class="autocomplete-wrapper">
+            <div class="autocomplete-dropdown" id="autocomplete-dropdown"></div>
+            <input class="guess-input" type="text" id="guess-input" name="guess"
+                placeholder="Search for the artist/title!" autocomplete="off">
+          </div>
+        </div>
+      </section>
+
+      <section id="game-over-box" class="section hidden" aria-labelledby="msg-title">
+        <div class="section-title" id="msg-title"></div>
+        <div class="message-box">
+          <div id="game-over-message" class="horiz-center hero-title"></div>
+          <div class="horiz-space-between time-bar">
+            <div id="game-over-time-bar-playing" class="time-bar-playing"></div>
+          </div>
+          <div class="horiz-center">
+            <img id="gameOverPlay" style="image-rendering: pixelated; margin-bottom: 80px;" width=92 height=92 src="../sprites/playButton.png" alt="Play full track" onerror="this.style.display='none'">
+          </div>
+          <div class="horiz-center"><img id="next" style="image-rendering: pixelated;" width=340 height=92 src="../sprites/NextSong.png" alt="Add time" onerror="this.style.display='none'"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const pageId = urlParams.get('genre');
+  let searchList = [];
+  let selectedValue = null;
+  let activeIndex = -1;
+  let guessNum = 1;
+  let randomSong;
+  let isPlaying = false;
+  let stopTimer = null;
+  const winMessages = [
+    'Nicely done!',
+    'Hell yeah!',
+    'You\'re good at this!',
+    'You got it!',
+    'Indubitably!',
+    'Oh Yeah!',
+    'That\'s correct!'
+  ]
+  const loseMessages = [
+    'Oof!',
+    'Nice try!',
+    'You\'ll get it next time!',
+    'Dang it!',
+    'It\'s a warm up round!',
+    'We go next!',
+    'That\'s a tough one!'
+  ]
+  const guessTimeDurations = [2, 4, 6, 9, 12, 16];
+  const input    = document.getElementById('guess-input');
+  const dropdown = document.getElementById('autocomplete-dropdown');
+  const gameBox = document.getElementById('game-box');
+  const gameOverBox = document.getElementById('game-over-box');
+  const gameOverMessage = document.getElementById('game-over-message');
+  const timeBarCutoff = document.getElementById('time-bar-cutoff')
+  const timeBarPlaying = document.getElementById('time-bar-playing')
+  const playButton = document.getElementById('play')
+  let audio = new Audio();
+  let playingBarRAF = null;
+  const gameOverTimeBarPlaying = document.getElementById('game-over-time-bar-playing');
+  const gameOverPlayButton = document.getElementById('gameOverPlay');
+  let gameOverIsPlaying = false;
+  let gameOverPlayingRAF = null;
+
+  initializePage();
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+    activeIndex = -1;
+
+    if (!query) { closeDropdown(); return; }
+
+    const matches = searchList.filter(s => s.searchString.toLowerCase().includes(query)).slice(0, 10);
+
+    if (!matches.length) { closeDropdown(); return; }
+
+    const itemDataMap = new Map();
+
+    dropdown.innerHTML = matches
+      .map((m, i) => `<div class="autocomplete-item" data-index="${i}">${m.searchString}</div>`)
+      .join('');
+    dropdown.classList.add('open');
+
+    dropdown.querySelectorAll('.autocomplete-item').forEach((item, i) => {
+      itemDataMap.set(item, matches[i]);   // store the object reference directly
+      item.addEventListener('mousedown', e => {
+        e.preventDefault();
+        selectItem(itemDataMap.get(item)); // retrieve it cleanly, no parsing
+      });
+    });
+  });
+
+  input.addEventListener('keydown', e => {
+    const items = dropdown.querySelectorAll('.autocomplete-item');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, items.length - 1);
+      updateActive(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, 0);
+      updateActive(items);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0) selectItem(items[activeIndex].textContent);
+    } else if (e.key === 'Escape') {
+      closeDropdown();
+    }
+  });
+
+  input.addEventListener('blur', closeDropdown);
+
+  /*=== Functions ===*/
+  function isNotEmptyString(str) {
+    return str !== "" && str !== null;
+  }
+
+  function applyGuess() {
+    let sameSource = false;
+    if (selectedValue.id !== randomSong.id ) {
+      const guessBar = document.getElementById(`guess${guessNum}`);
+      if (selectedValue.source == randomSong.source) {
+        sameSource = true
+      }
+      guessBar.innerHTML = `<img id="incorrectGuess${guessNum}" style="margin-left:10px" width=48 height=48 src="${sameSource ? "../sprites/SameSource.png" : "../sprites/Incorrect.png"}" alt="Add time" onerror="this.style.display='none'">
+              <div style="margin-left: -58px;">${selectedValue.searchString}</div>
+              <div></div>`;
+      guessNum++;
+      input.value = ''
+      selectedValue = ''
+      if (guessNum == 7) {
+        gameOver(false)
+      }
+    }
+    else {
+      input.value = ''
+      selectedValue = ''
+      gameOver(true)
+    }
+  }
+
+  function getGameOverMessage(win) {
+    if (win) {
+      return winMessages[Math.floor(Math.random() * winMessages.length)]
+    } else {
+      return loseMessages[Math.floor(Math.random() * loseMessages.length)]
+    }
+  }
+
+  function clearGuessBars() {
+    for (let i = 1; i < 7; i++) {
+      const guessBar = document.getElementById(`guess${i}`);
+      guessBar.innerHTML = '<div></div>???<div></div>'
+    }
+  }
+
+  function handleSkipClick() { 
+    applySkip()
+  }
+
+  function gameOver(win) {
+    clearTimeout(stopTimer);
+    stopPlayingBarAnimation(); // reset the main gameplay bar
+    isPlaying = false;
+
+    audio.currentTime = 0;
+    audio.play();
+    gameOverIsPlaying = true;
+    gameOverPlayButton.src = "../sprites/PauseButton.png";
+    startGameOverBarAnimation();
+
+    gameBox.classList.add('hidden')
+    gameOverBox.classList.remove('hidden')
+    gameOverMessage.innerHTML = `<div style="flex-direction: column; text-align: center;"><div>${getGameOverMessage(win)}</div><div class="song-answer" onclick="navigateToSong()">${getSong()}</div></div>`
+  }
+
+  function navigateToSong() {
+    handleGameOverPlayClick()
+    window.open(`https://www.youtube.com/watch?v=${randomSong.id}`, '_blank');
+  }
+
+  function applySkip() {
+    timeBarCutoff.style.width = `${(1 - (guessTimeDurations[guessNum]/guessTimeDurations[guessTimeDurations.length - 1])) * 100}%`
+    const guessBar = document.getElementById(`guess${guessNum}`);
+    guessBar.innerHTML = `<img id="incorrectGuess${guessNum}" style="margin-left:10px" width=48 height=48 src="../sprites/Incorrect.png" alt="Add time" onerror="this.style.display='none'">
+            <div style="margin-left: -58px;">Skipped</div>
+            <div></div>`;
+    guessNum++;
+    input.value = '';
+    selectedValue = '';
+
+    if (isPlaying) {
+      clearTimeout(stopTimer);
+      const allowedSeconds = guessTimeDurations[guessNum - 1];
+      const remaining = allowedSeconds - audio.currentTime;
+
+      // restart the animation loop scaled to the new (longer) allowed duration
+      stopPlayingBarAnimation(false); // cancel old loop, don't reset width
+      startPlayingBarAnimation();
+
+      stopTimer = setTimeout(() => {
+        playButton.src = "../sprites/playButton.png"
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        stopPlayingBarAnimation();
+      }, remaining * 1000);
+    }
+
+    if (guessNum == 7) {
+      gameOver(false);
+    }
+  }
+
+  function handlePlayClick() {
+    if (isPlaying) {
+      playButton.src = "../sprites/playButton.png"
+      audio.pause();
+      audio.currentTime = 0;
+      clearTimeout(stopTimer);
+      isPlaying = false;
+      stopPlayingBarAnimation();
+    } else {
+      const allowedSeconds = guessTimeDurations[guessNum - 1];
+
+      audio.play();
+      isPlaying = true;
+      playButton.src = "../sprites/PauseButton.png"
+      startPlayingBarAnimation();
+
+      stopTimer = setTimeout(() => {
+        playButton.src = "../sprites/playButton.png"
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        stopPlayingBarAnimation();
+      }, allowedSeconds * 1000);
+    }
+  }
+
+  function handleSubmitClick() {
+    timeBarCutoff.style.width = `${(1 - (guessTimeDurations[guessNum]/guessTimeDurations[guessTimeDurations.length - 1])) * 100}%`
+    console.log(`Submit clicked — selected value: ${selectedValue}`);
+    if (isNotEmptyString(selectedValue)) {
+      applyGuess()
+    }
+  }
+
+  function handleNextClick() {
+    playButton.src = "../sprites/playButton.png"
+    audio.pause();
+    audio.currentTime = 0;
+
+    gameOverPlayButton.src = "../sprites/playButton.png";
+    gameOverIsPlaying = false;
+    stopGameOverBarAnimation();
+
+    getSongSearchList()
+    clearGuessBars()
+    guessNum = 1
+    gameBox.classList.remove('hidden')
+    gameOverBox.classList.add('hidden')
+    isPlaying = false
+    timeBarCutoff.style.width = `${(1 - (guessTimeDurations[0]/guessTimeDurations[guessTimeDurations.length - 1])) * 100}%`
+    stopPlayingBarAnimation();
+  }
+
+  function loadAudio(videoId) {
+    audio.src = `./music-library/${pageId}/audio/${videoId}.mp3`;
+    audio.load();
+    isPlaying = false;
+  }
+
+  function initializePage() {
+    document.getElementById('skip').addEventListener('click', handleSkipClick);
+    document.getElementById('play').addEventListener('click', handlePlayClick);
+    document.getElementById('submit').addEventListener('click', handleSubmitClick);
+    document.getElementById('next').addEventListener('click', handleNextClick);
+    document.getElementById('gameOverPlay').addEventListener('click', handleGameOverPlayClick);
+
+    // reset bar to 0% whenever the clip finishes naturally
+    audio.addEventListener('ended', () => {
+      gameOverPlayButton.src = "../sprites/playButton.png";
+      gameOverIsPlaying = false;
+      stopGameOverBarAnimation(true);
+    });
+
+    timeBarCutoff.style.width = `${(1 - (guessTimeDurations[0]/guessTimeDurations[guessTimeDurations.length - 1])) * 100}%`
+
+    getSongSearchList()
+    const mp = document.getElementById('main-page');
+    mp.style.display = 'block';
+
+    const title = document.getElementById('main-title')
+    title.innerHTML = `🎵 ${pageId.charAt(0).toUpperCase() + pageId.substr(1)} Unlimited 🎵`
+
+    requestAnimationFrame(() => mp.classList.add('visible'));
+    initFloaters();
+  }
+
+  function initFloaters() {
+    const container = document.getElementById('floaters');
+    container.innerHTML = '';
+    const symbols = ['♬','🎵','🎶','♩','♬'];
+    const colors  = ['#ff0044','#0099db','#68386c'];
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('div');
+      el.className = 'floater';
+      el.textContent = symbols[i % symbols.length];
+      el.style.cssText = `left:${Math.random()*100}%;bottom:${-20+Math.random()*30}px;color:${colors[i%colors.length]};--fd:${4+Math.random()*6}s;--delay:${Math.random()*8}s`;
+      container.appendChild(el);
+    }
+  }
+
+  function updateActive(items) {
+    items.forEach((el, i) => el.classList.toggle('active', i === activeIndex));
+    if (activeIndex >= 0) items[activeIndex].scrollIntoView({ block: 'nearest' });
+  }
+
+  function selectItem(value) {
+    selectedValue = value;
+    input.value   = value.searchString;
+    closeDropdown();
+    console.log('Selected:', selectedValue);
+  }
+
+  function closeDropdown() {
+    dropdown.classList.remove('open');
+    dropdown.innerHTML = '';
+    activeIndex = -1;
+  }
+
+  async function getSongSearchList() {
+    const response = await fetch(`./music-library/${pageId}/dictionary.json`);
+    const data = await response.json();
+    randomSong = data[pageId][Math.floor(Math.random() * data[pageId].length)]
+    //randomSong = data[pageId].find(songEntry => songEntry.id == 'YtTp67sPgZk')
+    //randomSong = data[pageId].find(songEntry => songEntry.id == 'lArnKBTe82I')
+  
+    console.log(data);
+    console.log(randomSong);
+
+    switch (pageId) {
+      case "disney":
+        searchList = data[pageId].map((entry) => {
+          return {
+            id: entry.id,
+            searchString: `${entry.songTitle} - ${entry.source}`
+          }
+        }).sort((a, b) => a.searchString.localeCompare(b.searchString));
+        console.log(searchList);
+        break;
+      case "movies":
+        searchList = data[pageId].map((entry) => {
+          return {
+            id: entry.id,
+            source: entry.source,
+            searchString: `${entry.source} (${entry.releaseYear}) - ${entry.songTitle}`
+          }
+        }).sort((a, b) => a.searchString.localeCompare(b.searchString));
+        console.log(searchList);
+        break;
+      case "2010s":
+        searchList = data[pageId].map((entry) => `${entry.songTitle} - ${entry.artist}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "2000s":
+        searchList = data[pageId].map((entry) => `${entry.songTitle} - ${entry.artist}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "1980s":
+        searchList = data[pageId].map((entry) => `${entry.songTitle} - ${entry.artist}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "television":
+        searchList = data[pageId].map((entry) => `${entry.source} - ${entry.releaseYear}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "glee":
+        searchList = data[pageId].map((entry) => `${entry.songTitle} - ${entry.source}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "christmas":
+        searchList = data[pageId].map((entry) => `${entry.songTitle} - ${entry.artist}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "kpop":
+        searchList = data[pageId].map((entry) => `${entry.songTitle} - ${entry.releaseYear}`).sort((a, b) => a.localeCompare(b));
+        break;
+      case "games":
+        searchList = data[pageId].map((entry) => `${entry.source}`).sort((a, b) => a.localeCompare(b));
+        break;
+
+      default:
+        console.error(`Invalid genre id: ${pageId}`)
+    }
+
+    loadAudio(randomSong.id)
+  }
+
+  function getSong() {
+    return searchList.find((entry) =>entry.id == randomSong.id).searchString
+  }
+
+  function maxPlayingWidth(seconds) {
+    return (seconds / guessTimeDurations[guessTimeDurations.length - 1]) * 100;
+  }
+
+  function startPlayingBarAnimation() {
+    const allowedSeconds = guessTimeDurations[guessNum - 1];
+    const maxPercent = maxPlayingWidth(allowedSeconds);
+
+    function tick() {
+      if (!isPlaying) return;
+      const elapsed = Math.min(audio.currentTime, allowedSeconds);
+      const pct = (elapsed / allowedSeconds) * maxPercent;
+      timeBarPlaying.style.width = `${pct}%`;
+      playingBarRAF = requestAnimationFrame(tick);
+    }
+    playingBarRAF = requestAnimationFrame(tick);
+  }
+
+  function stopPlayingBarAnimation(reset = true) {
+    if (playingBarRAF) {
+      cancelAnimationFrame(playingBarRAF);
+      playingBarRAF = null;
+    }
+    if (reset) {
+      timeBarPlaying.style.width = '0%';
+    }
+  }
+
+  function startGameOverBarAnimation() {
+  function tick() {
+    if (!gameOverIsPlaying) return;
+    const duration = audio.duration || 30;
+    const pct = Math.min((audio.currentTime / duration) * 100, 100);
+    gameOverTimeBarPlaying.style.width = `${pct}%`;
+    gameOverPlayingRAF = requestAnimationFrame(tick);
+  }
+  gameOverPlayingRAF = requestAnimationFrame(tick);
+}
+
+  function stopGameOverBarAnimation(reset = true) {
+  if (gameOverPlayingRAF) {
+    cancelAnimationFrame(gameOverPlayingRAF);
+    gameOverPlayingRAF = null;
+  }
+  if (reset) {
+    gameOverTimeBarPlaying.style.width = '0%';
+  }
+}
+
+  function handleGameOverPlayClick() {
+  if (gameOverIsPlaying) {
+    gameOverPlayButton.src = "../sprites/playButton.png";
+    audio.pause();
+    gameOverIsPlaying = false;
+    stopGameOverBarAnimation(false); // pause in place, don't reset the bar
+  } else {
+    audio.play();
+    gameOverPlayButton.src = "../sprites/PauseButton.png";
+    gameOverIsPlaying = true;
+    startGameOverBarAnimation();
+  }
+}
+</script>
+</body>
+</html>

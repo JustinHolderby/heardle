@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✦ my little corner ✦</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --pink: #e8a0b4;
+      --lavender: #b8a4d4;
+      --mint: #9fcfb8;
+      --yellow: #f5d87a;
+      --sky: #a0c8e8;
+      --dark: #2a2030;
+      --mid: #4a3858;
+      --border: #8878a8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--dark);
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(184,164,212,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(232,160,180,0.10) 0%, transparent 50%);
+      font-family: 'VT323', monospace;
+      color: var(--cream);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Pixel star field */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: twinkle var(--d) ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Header */
+    .site-header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+    }
+    .site-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1rem, 4vw, 1.6rem);
+      color: var(--pink);
+      text-shadow: 3px 3px 0 var(--mid);
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+    .site-subtitle {
+      font-size: 1.5rem;
+      color: var(--lavender);
+      margin-top: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* Pixel divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 2rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--border) 0, var(--border) 4px, transparent 4px, transparent 8px);
+    }
+
+    /* Friend grid */
+    .friends-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .friend-card {
+      background: var(--mid);
+      border: 2px solid var(--border);
+      border-radius: 0;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      transition: transform 0.1s, box-shadow 0.1s;
+      image-rendering: pixelated;
+    }
+    .friend-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border: 2px solid transparent;
+      transition: border-color 0.1s;
+    }
+    .friend-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+    .friend-card:hover::before {
+      border-color: var(--pink);
+    }
+
+    .friend-avatar {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 0.75rem;
+      image-rendering: pixelated;
+      display: block;
+    }
+    .friend-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: var(--yellow);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .friend-blurb {
+      font-size: 1rem;
+      color: var(--cream);
+      opacity: 0.8;
+    }
+    .friend-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--mint);
+      background: rgba(159,207,184,0.15);
+      padding: 0 6px;
+      border: 1px solid var(--mint);
+    }
+
+    .card-pink  { border-color: var(--pink);     }
+    .card-pink:hover { box-shadow: 4px 4px 0 var(--pink); }
+    .card-lav   { border-color: var(--lavender);  }
+    .card-lav:hover { box-shadow: 4px 4px 0 var(--lavender); }
+    .card-mint  { border-color: var(--mint);      }
+    .card-mint:hover { box-shadow: 4px 4px 0 var(--mint); }
+    .card-sky   { border-color: var(--sky);       }
+    .card-sky:hover { box-shadow: 4px 4px 0 var(--sky); }
+    .card-yellow{ border-color: var(--yellow);    }
+    .card-yellow:hover { box-shadow: 4px 4px 0 var(--yellow); }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 1rem;
+      color: var(--border);
+      letter-spacing: 0.1em;
+    }
+    .site-footer a { color: var(--lavender); text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+
+    /* Bouncing cursor */
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .cursor {
+      display: inline-block;
+      animation: blink 1s step-end infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pixel stars generated by JS -->
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <header class="site-header">
+      <h1 class="site-title">✦ my little corner ✦</h1>
+      <p class="site-subtitle">a space just for you<span class="cursor">_</span></p>
+    </header>
+
+    <div class="divider">✦ ✦ ✦</div>
+
+    <p style="text-align:center; font-size:1.3rem; color:var(--lavender); margin-bottom:1.5rem; letter-spacing:0.05em;">
+      each page below is made just for one person.<br>
+      if you see your name — it's yours. ♡
+    </p>
+
+    <div class="friends-grid">
+
+      <!-- FRIEND 1 — example (replace with real names + link to their page) -->
+      <a href="friends/morgan.html" class="friend-card card-pink">
+        <img class="friend-avatar" src="sprites/maya.png" alt="pixel art avatar" onerror="this.style.display='none'">
+        <canvas class="friend-avatar" id="av-maya" width="64" height="64"></canvas>
+        <div class="friend-name">morgan</div>
+        <div class="friend-blurb">the one who always knows the right song</div>
+        <span class="friend-tag">♫ music</span>
+      </a>
+
+      <!-- FRIEND 2 — placeholder cards -->
+      <a href="heardle/heardle.html" class="friend-card card-lav">
+        <img width=128 height=128 src="sprites/musicIcon.png" alt="pixel art avatar" onerror="this.style.display='none'">
+        <div class="friend-name">Heardle, but better</div>
+        <div class="friend-blurb">coming soon...</div>
+      </a>
+
+      <a href="friends/friend3.html" class="friend-card card-mint">
+        <canvas class="friend-avatar" id="av-3" width="64" height="64"></canvas>
+        <div class="friend-name">???</div>
+        <div class="friend-blurb">coming soon...</div>
+        <span class="friend-tag">✦ mystery</span>
+      </a>
+
+      <a href="friends/friend4.html" class="friend-card card-sky">
+        <canvas class="friend-avatar" id="av-4" width="64" height="64"></canvas>
+        <div class="friend-name">???</div>
+        <div class="friend-blurb">coming soon...</div>
+        <span class="friend-tag">✦ mystery</span>
+      </a>
+
+    </div>
+
+    <div class="divider">✦ ✦ ✦</div>
+
+    <footer class="site-footer">
+      made with ♡ · hosted on <a href="https://pages.github.com" target="_blank">github pages</a>
+    </footer>
+  </div>
+
+  <script>
+    /* ── Star field ── */
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${1.5+Math.random()*3}s;animation-delay:${Math.random()*3}s;opacity:${0.2+Math.random()*0.6}`;
+      if (Math.random() > 0.85) { s.style.width = s.style.height = '3px'; }
+      starsEl.appendChild(s);
+    }
+
+    /* ── Pixel avatar generator (fallback if no real image) ── */
+    function drawAvatar(id, palette) {
+      const c = document.getElementById(id);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      const size = 64, px = 8, cols = size/px;
+      // Mirror a random 4×8 grid for symmetry
+      const half = [];
+      for (let r = 0; r < cols; r++) {
+        half[r] = [];
+        for (let col = 0; col < cols/2; col++) half[r][col] = Math.random() > 0.45;
+      }
+      for (let r = 0; r < cols; r++) {
+        for (let col = 0; col < cols; col++) {
+          const on = col < cols/2 ? half[r][col] : half[r][cols-1-col];
+          ctx.fillStyle = on ? palette[Math.floor(Math.random()*palette.length)] : 'transparent';
+          if (on) ctx.fillRect(col*px, r*px, px, px);
+        }
+      }
+    }
+
+    drawAvatar('av-maya',   ['#e8a0b4','#f5d87a','#f5f0e8','#b8a4d4']);
+    drawAvatar('av-2',      ['#b8a4d4','#9fcfb8','#f5f0e8','#e8a0b4']);
+    drawAvatar('av-3',      ['#9fcfb8','#a0c8e8','#f5f0e8','#f5d87a']);
+    drawAvatar('av-4',      ['#a0c8e8','#e8a0b4','#f5f0e8','#9fcfb8']);
+  </script>
+</body>
+</html>

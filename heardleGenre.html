@@ -348,7 +348,7 @@
 
       <div class="back-button">
         <a href="heardle.html">
-          <img id="back" style="image-rendering: pixelated;" width=111 height=39 src="../sprites/BackButton.png" alt="Go back" onerror="this.style.display='none'">
+          <img id="back" style="image-rendering: pixelated;" width=111 height=39 src="sprites/BackButton.png" alt="Go back" onerror="this.style.display='none'">
         </a>
       </div>
 
@@ -366,9 +366,9 @@
             <div id="time-bar-cutoff" class="time-bar-cutoff"></div>
           </div>
           <div class="horiz-space-between">
-            <img id="skip" style="image-rendering: pixelated;" width=244 height=92 src="../sprites/SkipButton.png" alt="Add time" onerror="this.style.display='none'">
-            <img id="play" style="image-rendering: pixelated;" width=92 height=92 src="../sprites/playButton.png" alt="Play track" onerror="this.style.display='none'">
-            <img id="submit" style="image-rendering: pixelated;" width=244 height=92 src="../sprites/SubmitButton.png" alt="Submit guess" onerror="this.style.display='none'">
+            <img id="skip" style="image-rendering: pixelated;" width=244 height=92 src="sprites/SkipButton.png" alt="Add time" onerror="this.style.display='none'">
+            <img id="play" style="image-rendering: pixelated;" width=92 height=92 src="sprites/playButton.png" alt="Play track" onerror="this.style.display='none'">
+            <img id="submit" style="image-rendering: pixelated;" width=244 height=92 src="sprites/SubmitButton.png" alt="Submit guess" onerror="this.style.display='none'">
           </div>
           <div id="yt-container">
             <div id="yt-player"></div>
@@ -389,9 +389,9 @@
             <div id="game-over-time-bar-playing" class="time-bar-playing"></div>
           </div>
           <div class="horiz-center">
-            <img id="gameOverPlay" style="image-rendering: pixelated; margin-bottom: 80px;" width=92 height=92 src="../sprites/playButton.png" alt="Play full track" onerror="this.style.display='none'">
+            <img id="gameOverPlay" style="image-rendering: pixelated; margin-bottom: 80px;" width=92 height=92 src="sprites/playButton.png" alt="Play full track" onerror="this.style.display='none'">
           </div>
-          <div class="horiz-center"><img id="next" style="image-rendering: pixelated;" width=340 height=92 src="../sprites/NextSong.png" alt="Add time" onerror="this.style.display='none'"></div>
+          <div class="horiz-center"><img id="next" style="image-rendering: pixelated;" width=340 height=92 src="sprites/NextSong.png" alt="Add time" onerror="this.style.display='none'"></div>
         </div>
       </section>
     </div>
@@ -504,7 +504,7 @@
       if (selectedValue.source == randomSong.source) {
         sameSource = true
       }
-      guessBar.innerHTML = `<img id="incorrectGuess${guessNum}" style="margin-left:10px" width=48 height=48 src="${sameSource ? "../sprites/SameSource.png" : "../sprites/Incorrect.png"}" alt="Add time" onerror="this.style.display='none'">
+      guessBar.innerHTML = `<img id="incorrectGuess${guessNum}" style="margin-left:10px" width=48 height=48 src="${sameSource ? "sprites/SameSource.png" : "sprites/Incorrect.png"}" alt="Add time" onerror="this.style.display='none'">
               <div style="margin-left: -58px;">${selectedValue.searchString}</div>
               <div></div>`;
       guessNum++;
@@ -548,7 +548,7 @@
     audio.currentTime = 0;
     audio.play();
     gameOverIsPlaying = true;
-    gameOverPlayButton.src = "../sprites/PauseButton.png";
+    gameOverPlayButton.src = "sprites/PauseButton.png";
     startGameOverBarAnimation();
 
     gameBox.classList.add('hidden')
@@ -564,7 +564,7 @@
   function applySkip() {
     timeBarCutoff.style.width = `${(1 - (guessTimeDurations[guessNum]/guessTimeDurations[guessTimeDurations.length - 1])) * 100}%`
     const guessBar = document.getElementById(`guess${guessNum}`);
-    guessBar.innerHTML = `<img id="incorrectGuess${guessNum}" style="margin-left:10px" width=48 height=48 src="../sprites/Incorrect.png" alt="Add time" onerror="this.style.display='none'">
+    guessBar.innerHTML = `<img id="incorrectGuess${guessNum}" style="margin-left:10px" width=48 height=48 src="sprites/Incorrect.png" alt="Add time" onerror="this.style.display='none'">
             <div style="margin-left: -58px;">Skipped</div>
             <div></div>`;
     guessNum++;
@@ -581,7 +581,7 @@
       startPlayingBarAnimation();
 
       stopTimer = setTimeout(() => {
-        playButton.src = "../sprites/playButton.png"
+        playButton.src = "sprites/playButton.png"
         audio.pause();
         audio.currentTime = 0;
         isPlaying = false;
@@ -596,7 +596,7 @@
 
   function handlePlayClick() {
     if (isPlaying) {
-      playButton.src = "../sprites/playButton.png"
+      playButton.src = "sprites/playButton.png"
       audio.pause();
       audio.currentTime = 0;
       clearTimeout(stopTimer);
@@ -607,11 +607,11 @@
 
       audio.play();
       isPlaying = true;
-      playButton.src = "../sprites/PauseButton.png"
+      playButton.src = "sprites/PauseButton.png"
       startPlayingBarAnimation();
 
       stopTimer = setTimeout(() => {
-        playButton.src = "../sprites/playButton.png"
+        playButton.src = "sprites/playButton.png"
         audio.pause();
         audio.currentTime = 0;
         isPlaying = false;
@@ -629,11 +629,11 @@
   }
 
   function handleNextClick() {
-    playButton.src = "../sprites/playButton.png"
+    playButton.src = "sprites/playButton.png"
     audio.pause();
     audio.currentTime = 0;
 
-    gameOverPlayButton.src = "../sprites/playButton.png";
+    gameOverPlayButton.src = "sprites/playButton.png";
     gameOverIsPlaying = false;
     stopGameOverBarAnimation();
 
@@ -662,7 +662,7 @@
 
     // reset bar to 0% whenever the clip finishes naturally
     audio.addEventListener('ended', () => {
-      gameOverPlayButton.src = "../sprites/playButton.png";
+      gameOverPlayButton.src = "sprites/playButton.png";
       gameOverIsPlaying = false;
       stopGameOverBarAnimation(true);
     });
@@ -829,13 +829,13 @@
 
   function handleGameOverPlayClick() {
   if (gameOverIsPlaying) {
-    gameOverPlayButton.src = "../sprites/playButton.png";
+    gameOverPlayButton.src = "sprites/playButton.png";
     audio.pause();
     gameOverIsPlaying = false;
     stopGameOverBarAnimation(false); // pause in place, don't reset the bar
   } else {
     audio.play();
-    gameOverPlayButton.src = "../sprites/PauseButton.png";
+    gameOverPlayButton.src = "sprites/PauseButton.png";
     gameOverIsPlaying = true;
     startGameOverBarAnimation();
   }

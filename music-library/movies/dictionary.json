@@ -30,7 +30,7 @@
             "source": "Forrest Gump", 
             "releaseYear": "1994", 
             "artist": "Alan Silvestri",
-            "start": 2
+            "start": 89
         },
         { 
             "id": "maA5bCx3_Jk", 
@@ -70,7 +70,7 @@
             "source": "National Treasure", 
             "releaseYear": "2004", 
             "artist": "Trevor Rabin",
-            "start": 0
+            "start": 52
         },
         {
             "id": "fMoFmICrISE",
@@ -94,7 +94,7 @@
             "source": "Shawshank Redemption", 
             "releaseYear": "1994", 
             "artist": "Thomas Newman",
-            "start": 22
+            "start": 45
         },
         {
             "id": "HcZ9kQ1h-ZY",
@@ -134,7 +134,7 @@
             "source": "The Lion King", 
             "releaseYear": "1994", 
             "artist": "Hans Zimmer",
-            "start": 0
+            "start": 357
         },
         {
             "id": "im5CIpMFo4Q",
@@ -310,7 +310,7 @@
             "source": "V for Vendetta", 
             "releaseYear": "2005", 
             "artist": "Pyotr Ilyich Tchaikovsky",
-            "start": 1
+            "start": 62
         },
         {
             "id": "bGLP3CQCUJk",
@@ -401,12 +401,12 @@
             "start": 0
         },
         {
-            "id": "r5uYB9T_GlY",
-            "songTitle": "King of Pride Rock", 
+            "id": "p2oTByT6KNc",
+            "songTitle": "Circle of Life", 
             "source": "The Lion King", 
             "releaseYear": "1994", 
             "artist": "Hans Zimmer",
-            "start": 1
+            "start": 87
         },
         {
             "id": "A-DuOmA75lI",
@@ -523,7 +523,7 @@
         {
             "id": "2pCv7k_Hzvg",
             "songTitle": "The Gael", 
-            "source": "Last of the Mohicans", 
+            "source": "The Last of the Mohicans", 
             "releaseYear": "1992", 
             "artist": "Dougie Maclean",
             "start": 18
@@ -1190,7 +1190,7 @@
             "source": "TRON: Legacy", 
             "releaseYear": "2010", 
             "artist": "Daft Punk",
-            "start": 47
+            "start": 46
         },
         {
             "id": "oIyo8oC2cCE",
@@ -1723,7 +1723,7 @@
         {
             "id": "egQbaDRMxGI",
             "songTitle": "Belle", 
-            "source": "Beauty and the Beast (2017)", 
+            "source": "Beauty and the Beast", 
             "releaseYear": "2017", 
             "artist": "Emma Watson",
             "start": 157
@@ -1943,6 +1943,30 @@
             "releaseYear": "2010", 
             "artist": "Daft Punk",
             "start": 148
+        },
+        {
+            "id": "N-FSezFRB8M",
+            "songTitle": "Main Title", 
+            "source": "Elf", 
+            "releaseYear": "2003", 
+            "artist": "John Debney",
+            "start": 50
+        },
+        {
+            "id": "wccRif2DaGs",
+            "songTitle": "Vienna", 
+            "source": "13 Going On 30", 
+            "releaseYear": "2004", 
+            "artist": "Billy Joel",
+            "start": 12
+        },
+        {
+            "id": "QvL--i2ICLU",
+            "songTitle": "A Thousand Miles", 
+            "source": "White Chicks", 
+            "releaseYear": "2004", 
+            "artist": "Vanessa Carlton",
+            "start": 0
         }
     ]
 }

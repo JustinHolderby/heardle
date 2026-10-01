@@ -1145,14 +1145,6 @@
             "start": 172
         },
         {
-            "id": "GcC3rYEZv9o",
-            "songTitle": "Reflection", 
-            "source": "Mulan", 
-            "releaseYear": "1998", 
-            "artist": "Lea Salonga",
-            "start": 30
-        },
-        {
             "id": "II04E2GEJG8",
             "songTitle": "Victory Celebration", 
             "source": "Star Wars: Return of the Jedi", 
@@ -1910,7 +1902,7 @@
             "source": "Mulan", 
             "releaseYear": "1998", 
             "artist": "Lea Salonga",
-            "start": 98
+            "start": 30
         },
         {
             "id": "RI-Muef-ubk",
